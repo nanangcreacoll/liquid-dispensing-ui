@@ -10,7 +10,13 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
-
+    
+    protected $table = "users";
+    protected $primaryKey = "id";
+    protected $keyType = "int";
+    public $timestamps = true;
+    public $incrementing = true;
+    
     /**
      * The attributes that are mass assignable.
      *
