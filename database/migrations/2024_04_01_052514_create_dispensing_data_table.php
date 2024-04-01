@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('dispensing_data', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->integer('volume');
-            $table->integer('capsules_qty');
+            $table->integer('volume')->nullable(false);
+            $table->integer('capsules_qty')->nullable(false);
+            $table->unsignedBigInteger("user_id")->nullable(false);
             $table->foreign("user_id")->on("users")->references("id");
         });
     }
