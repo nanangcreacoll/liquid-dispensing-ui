@@ -7,23 +7,29 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::is('kendali') ? 'active' : '' }}" aria-current="page" href="/kendali">Kendali</a>
+                    <a class="nav-link {{ Request::is('kendali') ? 'active' : '' }}" aria-current="page"
+                        href="/kendali">Kendali</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::is('riwayat') ? 'active' : '' }}" aria-current="page" href="/riwayat">Riwayat</a>
+                    <a class="nav-link {{ Request::is('riwayat') ? 'active' : '' }}" aria-current="page"
+                        href="/riwayat">Riwayat</a>
                 </li>
             </ul>
         </div>
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item dropdown">
-                <a class="nav-link" id="userDropdown" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                    <span class="text-gray">User</span>
+        <div class="dropdown">
+            <button type="button" id="userDropdown" class="w-100 btn border-0 btn-hover" data-bs-toggle="dropdown"
+                data-bs-display="static" aria-expanded="false">
+                    <span class="text-bright">{{ Auth::user()->username }}</span>
                     <img class="img-profile rounded-circle" src="{{ asset('img/714.jpg') }}" alt="user profile" style="height: 2em;">
-                </a>
-                <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="/login">Logout</a></li>
-                </ul>
-            </li>
-        </ul>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li>
+                    <form action="/logout-view" method="post">
+                        @csrf
+                        <button type="submit" class="dropdown-item btn btn-light">Logout</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
     </div>
 </nav>
