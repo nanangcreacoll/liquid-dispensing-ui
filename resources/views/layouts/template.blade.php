@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href="{{ asset('dist/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-    <title>@yield('title') &#128900; Liquid Dispensing I-131</title>
+    <title>@yield('title') &bull; Liquid Dispensing I-131</title>
 </head>
 
 <body>

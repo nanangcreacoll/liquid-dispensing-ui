@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href="{{ asset('dist/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-    <title>Login &#128900; Liquid Dispensing I-131</title>
+    <title>Login &bull; Liquid Dispensing I-131</title>
 </head>
 
 <body class="bg-danger bg-gradient">
@@ -49,7 +49,7 @@
                         </main>
                     </div>
                 </div>
-                <p class="mt-5 mb-3 text-white text-center">&copy; 2024 &#128900; Penelitian Tugas Akhir
+                <p class="mt-5 mb-3 text-white text-center">&copy; 2024 &bull; Penelitian Tugas Akhir
                     Liquid Dispensing Kapsul Radiofarmaka I-131</p>
             </div>
         </div>
