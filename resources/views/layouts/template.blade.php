@@ -15,7 +15,8 @@
     <div class="container-md">
         @yield('content')
     </div>
-    <script src="{{ asset('dist/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    @include('partials.footer')
 </body>
+<script src="{{ asset('dist/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
 </html>
