@@ -10,4 +10,9 @@ class DispensingDataController extends Controller
     {
         return view("kendali");
     }
+
+    public function riwayatView()
+    {
+        return view("riwayat");
+    }
 }
