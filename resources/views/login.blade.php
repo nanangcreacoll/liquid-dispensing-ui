@@ -39,7 +39,7 @@
                                     <label for="password">Password</label>
                                 </div>
                                 <div class="form-check text-start my-3">
-                                    <input class="form-check-input" type="checkbox" name="remember-me" value="remember-me" id="remember-me" checked>
+                                    <input class="form-check-input" type="checkbox" name="remember-me" value="remember-me" id="remember-me">
                                     <label class="form-check-label" for="remember-me">
                                       Remember me
                                     </label>

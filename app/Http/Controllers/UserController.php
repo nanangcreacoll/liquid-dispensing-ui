@@ -16,8 +16,8 @@ class UserController extends Controller
     public function loginAuth(Request $request): RedirectResponse
     {
         $credentials = $request->validate([
-            'username' => ['required'],
-            'password' => ['required']
+            'username' => ['required', 'max:255'],
+            'password' => ['required', 'max:255']
         ]);
 
         if (Auth::attempt($credentials, $request->filled('remember-me'))) {
@@ -26,7 +26,7 @@ class UserController extends Controller
             return redirect()->intended('kendali');
         }
 
-        return back()->with([
+        return redirect()->back()->with([
             'loginError' => 'Username atau password salah.',
         ]);
     }
