@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class DispensingDataController extends Controller
 {
-    public function index()
+    public function kendaliView()
     {
         return view("kendali");
     }

@@ -26,7 +26,7 @@
                             </div>
                         @endif
                         <main class="card-body form-signin w-100 m-auto">
-                            <form action="/login-view" method="post">
+                            <form action="/login" method="post">
                                 @csrf
                                 <div class="form-floating text-dark-emphasis">
                                     <input type="text" name="username" class="form-control" id="username"
@@ -39,7 +39,7 @@
                                     <label for="password">Password</label>
                                 </div>
                                 <div class="form-check text-start my-3">
-                                    <input class="form-check-input" type="checkbox" name="remember-me" value="remember-me" id="remember-me" {{ old('remember-me') ? 'checked' : '' }}>
+                                    <input class="form-check-input" type="checkbox" name="remember-me" value="remember-me" id="remember-me" checked>
                                     <label class="form-check-label" for="remember-me">
                                       Remember me
                                     </label>
