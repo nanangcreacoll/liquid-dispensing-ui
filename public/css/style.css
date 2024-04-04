@@ -37,3 +37,16 @@
 .text-bright {
     color: #d2d2d2; /* Use white color for bright text */
 }
+
+.status-circle {
+    position: absolute;
+    top: 20px; /* Adjust as needed for positioning */
+    right: 20px; /* Adjust as needed for positioning */
+    width: 20px; /* Adjust as needed for size */
+    height: 20px; /* Adjust as needed for size */
+    border-radius: 50%;
+}
+
+.text-large {
+    font-size: 800%;
+}
