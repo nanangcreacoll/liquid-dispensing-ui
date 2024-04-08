@@ -23,17 +23,14 @@ window.Echo = new Echo({
 window.Echo.channel("dispensing-status").listen(
     "DispensingStatus",
     (event) => {
-        console.log(event);
         const statusCircle = document.getElementById("status-circle");
 
         if (event.status) {
             statusCircle.classList.remove("bg-danger");
             statusCircle.classList.add("bg-success");
-            console.log("Dispensing Status: true");
         } else {
             statusCircle.classList.remove("bg-success");
             statusCircle.classList.add("bg-danger");
-            console.log("Dispensing Status: false");
         }
     }
 );
