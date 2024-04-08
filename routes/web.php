@@ -12,4 +12,4 @@ Route::post('/dispensing-data', [DispensingDataController::class]);
 
 Route::get('/login', [UserController::class, 'loginView'])->name('login')->middleware('guest');
 Route::post('/login', [UserController::class, 'loginAuth'])->name('login-auth');
-Route::post('/logout', [UserController::class, 'logoutAuth'])->name('logout-auth');
+Route::post('/logout', [UserController::class, 'logoutAuth'])->name('logout-auth')->middleware('auth');

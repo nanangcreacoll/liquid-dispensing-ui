@@ -6,8 +6,6 @@ use App\Events\DispensingStatus;
 use PhpMqtt\Client\MqttClient;
 use Illuminate\Console\Command;
 use PhpMqtt\Client\Facades\MQTT;
-use Illuminate\Support\Facades\Log;
-use App\Events\DispensingStatusReceived;
 
 class DispensingStatusSubcribeCommand extends Command
 {
