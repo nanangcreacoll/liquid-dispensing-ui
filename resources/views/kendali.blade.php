@@ -17,12 +17,13 @@
                             <div class="card shadow border-left-info border-0 position-relative mb-3 rounded-pill">
                                 <div class="card-body">
                                     <text class="card-text fst-italic">Dispensing</text>
-                                    <div class="status-circle bg-success "></div>
+                                    <div class="status-circle bg-success" id="status-circle"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <form action="" id="dispensingDataFrom">
+                        @csrf
                         <div class="row justify-content-center">
                             <div class="form-group col-md-4 col-lg-4 mb-2">
                                 <div class="card shadow border-0 position-relative" style="border-radius: 12%;">
@@ -51,5 +52,4 @@
             </div>
         </div>
     </div>
-
 @endsection
