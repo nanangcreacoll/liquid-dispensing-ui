@@ -8,7 +8,9 @@ use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
+use App\Http\Requests\UserLoginRequest;
 use App\Http\Requests\UserRegisterRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UserController extends Controller
 {
@@ -27,12 +29,9 @@ class UserController extends Controller
         return new UserResource($user);
     }
 
-    public function loginAuth(Request $request): RedirectResponse
-    {
-        $credentials = $request->validate([
-            'username' => ['required', 'max:255'],
-            'password' => ['required', 'max:255']
-        ]);
+    public function loginAuth(UserLoginRequest $request): RedirectResponse
+    {        
+        $credentials = $request->validated();
 
         if (Auth::attempt($credentials, $request->filled('remember-me'))) {
             $request->session()->regenerate();

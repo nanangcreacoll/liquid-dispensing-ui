@@ -22,7 +22,7 @@
                             </div>
                         </div>
                     </div>
-                    <form action="" id="dispensingDataFrom">
+                    <form action="{{ route('dispensing-data') }}" id="dispensingDataFrom" method="post">
                         @csrf
                         <div class="row justify-content-center">
                             <div class="form-group col-md-4 col-lg-4 mb-2">

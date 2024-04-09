@@ -29,11 +29,13 @@ class UserLoginRequest extends FormRequest
         ];
     }
 
-    protected function failedValidation(Validator $validator)
+    public function messages()
     {
-        throw new HttpResponseException(response([
-            "errors" => $validator->getMessageBag()
-        ], 400));
+        return [
+            'username.required' => 'Username wajib diisi.',
+            'username.max' => 'Username terlalu panjang.',
+            'password.required' => 'Password wajib diisi.',
+            'password.max' => 'Password terlalu panjang.'
+        ];
     }
-
 }

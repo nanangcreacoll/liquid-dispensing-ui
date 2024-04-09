@@ -8,11 +8,11 @@
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('kendali') ? 'active' : '' }}" aria-current="page"
-                        href="/kendali">Kendali</a>
+                        href="{{ route('kendali') }}">Kendali</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('riwayat') ? 'active' : '' }}" aria-current="page"
-                        href="/riwayat">Riwayat</a>
+                        href="{{ route('riwayat') }}">Riwayat</a>
                 </li>
             </ul>
         </div>
@@ -24,7 +24,7 @@
             </button>
             <ul class="dropdown-menu dropdown-menu-end">
                 <li>
-                    <form action="/logout" method="post">
+                    <form action="{{ route('logout-auth') }}" method="post">
                         @csrf
                         <button type="submit" class="dropdown-item btn btn-light">Logout</button>
                     </form>
