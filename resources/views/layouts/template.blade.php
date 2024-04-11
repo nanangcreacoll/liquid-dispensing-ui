@@ -17,7 +17,8 @@
     </div>
     @include('partials.footer')
 </body>
-@vite('resources/js/app.js')
 <script src="{{ asset('dist/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('dist/jquery-3.7.1/jquery-3.7.1.min.js') }}"></script>
+@vite('resources/js/app.js')
 
 </html>

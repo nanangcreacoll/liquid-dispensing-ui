@@ -32,8 +32,9 @@ class DispensingStatusSubcribeCommand extends Command
         $qos = MqttClient::QOS_EXACTLY_ONCE;
 
         $mqtt = MQTT::connection();
+        printf("\nSubcribed to topic: %s\n", $topic);
         $mqtt->subscribe($topic, function ($topic, $message) {
-            $this->info('Received message from topic: '. $topic .PHP_EOL. $message);
+            printf("\nReceived message!\n%s\n", $message);
             
             $status = json_decode($message, true)['status'];
 
