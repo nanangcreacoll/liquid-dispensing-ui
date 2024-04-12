@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->integer('volume')->nullable(false);
-            $table->integer('capsules_qty')->nullable(false);
+            $table->integer('capsule_qty')->nullable(false);
             $table->unsignedBigInteger("user_id")->nullable(false);
             $table->foreign("user_id")->on("users")->references("id");
         });
