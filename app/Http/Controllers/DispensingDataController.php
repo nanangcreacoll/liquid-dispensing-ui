@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\DispensingData;
 use PhpMqtt\Client\MqttClient;
 use PhpMqtt\Client\Facades\MQTT;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\DispensingDataRequest;
 
 class DispensingDataController extends Controller
@@ -27,6 +29,12 @@ class DispensingDataController extends Controller
         $topic = 'dispensing/data';
         $mqtt->publish($topic, json_encode($data), $qos);
         $mqtt->loop(true, true);
+
+        $dispensingData = new DispensingData();
+        $dispensingData->volume = $data['volume'];
+        $dispensingData->capsule_qty = $data['capsuleQty'];
+        $dispensingData->user_id = Auth::id();
+        $dispensingData->save();
 
         return response()->json(['success' => true]);
     }
