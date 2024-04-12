@@ -64,7 +64,6 @@ $(function () {
                 capsuleQty: capsuleQty,
             },
             success: function (response) {
-                console.log("Data dispensing terkirim:", response);
                 if (response.success) {
                     dispensingStartToast();
                 } else {
