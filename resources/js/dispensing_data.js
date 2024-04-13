@@ -2,19 +2,23 @@ $(function () {
     function dispensingStartToast() {
         $("#dispensingStartToastCloseButton").hide();
         $("#dispensingStartToast").toast("show");
-        document
-            .getElementById("dispensingStartButton")
-            .classList.add("disabled");
+
+        let processToast = false;
 
         window.Echo.channel("dispensing-status").listen(
             "DispensingStatus",
             (event) => {
-                if (!event.status) {
+                if (!event.status && !processToast) {
                     $("#dispensingStartToastCloseButton").show();
+                    document
+                        .getElementById("dispensingStartButton")
+                        .classList.add("disabled");
                     setTimeout(function () {
                         $("#dispensingStartToast").toast("hide");
                     }, 3000);
-                } else {
+                    processToast = true;
+                } else if (event.status && processToast){
+                    $("#dispensingStartToast").toast("hide");
                     $("#dispensingFinishToast").toast("show");
                     setTimeout(function () {
                         $("#dispensingFinishToast").toast("hide");
@@ -22,6 +26,7 @@ $(function () {
                     document
                         .getElementById("dispensingStartButton")
                         .classList.remove("disabled");
+                    processToast = false;
                 }
             }
         );
@@ -39,7 +44,8 @@ $(function () {
             errorMessage = "Error tidak diketahui.";
         }
 
-        document.getElementById("dispensingErrorMessage").innerHTML = errorMessage;
+        document.getElementById("dispensingErrorMessage").innerHTML =
+            errorMessage;
 
         $("#dispensingErrorToast").toast("show");
     }
@@ -47,8 +53,8 @@ $(function () {
     $("#dispensingDataForm").on("submit", function (e) {
         e.preventDefault();
 
-        let volume = $("#volume").val();
-        let capsuleQty = $("#capsule-qty").val();
+        let volume = parseInt($("#volume").val(),10);
+        let capsuleQty = parseInt($("#capsule-qty").val(),10);
 
         $.ajaxSetup({
             headers: {
@@ -57,7 +63,7 @@ $(function () {
         });
 
         $.ajax({
-            url: "/dispensing-data",
+            url: $('form[id="dispensingDataForm"]').attr("action"),
             type: "POST",
             data: {
                 volume: volume,

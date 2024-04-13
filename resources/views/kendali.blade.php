@@ -22,14 +22,14 @@
                             </div>
                         </div>
                     </div>
-                    <form id="dispensingDataForm" action="{{ route('dispensing-data') }}" method="post">
+                    <form id="dispensingDataForm" action="{{ route('dispensing-data-store') }}" method="post">
                         @csrf
                         <div class="row justify-content-center">
                             <div class="form-group col-md-4 col-lg-4 mb-2">
                                 <div class="card shadow border-0 position-relative" style="border-radius: 12%;">
                                     <input
                                         class="mt-5 border-0 form-control text h1 text-large font-weight-bold text-body text-uppercase text-center"
-                                        type="number" id="volume" placeholder="00" min="1" max="50" step="1" required>
+                                        type="number" id="volume" placeholder="00" min="1" max="50" step="1" required autocomplete="off">
                                     <label class="text h3 font-weight-bold text-body text-center"
                                         for="inputVolume"><strong>Volume</strong></label>
                                 </div>
@@ -38,7 +38,7 @@
                                 <div class="card shadow border-0 position-relative" style="border-radius: 12%;">
                                     <input
                                         class="mt-5 border-0 form-control text h1 text-large font-weight-bold text-body text-uppercase text-center"
-                                        type="number" id="capsule-qty" placeholder="0" min="1" max="5" step="1" required>
+                                        type="number" id="capsule-qty" placeholder="0" min="1" max="5" step="1" required autocomplete="off">
                                     <label class="text h3 font-weight-bold text-body text-center"
                                         for="inputCapsuleQty"><strong>Jumlah Kapsul</strong></label>
                                 </div>
