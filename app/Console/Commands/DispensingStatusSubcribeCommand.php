@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
-use App\Events\DispensingStatus;
 use PhpMqtt\Client\MqttClient;
 use Illuminate\Console\Command;
+use App\Events\DispensingStatus;
 use PhpMqtt\Client\Facades\MQTT;
 
 class DispensingStatusSubcribeCommand extends Command
@@ -30,17 +30,17 @@ class DispensingStatusSubcribeCommand extends Command
     {
         $topic = 'dispensing/status';
         $qos = MqttClient::QOS_EXACTLY_ONCE;
-
         $mqtt = MQTT::connection();
-        printf("\nSubcribed to topic: %s\n", $topic);
-        $mqtt->subscribe($topic, function ($topic, $message) {
-            printf("\nReceived message!\n%s\n", $message);
-            
-            $status = json_decode($message, true)['status'];
 
-            event(new DispensingStatus($status));
+        $this->info("\nSubcribed to topic: {$topic}\n");
+        $mqtt->subscribe($topic, function ($topic, $message) {
+            $this->info("Received message! \n{$message}\n");
+
+            $status = json_decode($message);
+
+            event(new DispensingStatus($status->status));
         }, $qos);
 
-        $mqtt->loop(true);
+        $mqtt->loop(true, true);
     }
 }
