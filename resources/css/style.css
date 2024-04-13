@@ -31,7 +31,7 @@
 }
 
 .btn-hover:hover {
-    background-color: #fc3b3b; /* Change background color on hover */
+    background-image: linear-gradient(to bottom right, #ff6161, #e44343); /* Change background color on hover */
 }
 
 .text-bright {
@@ -49,4 +49,25 @@
 
 .text-large {
     font-size: 800%;
+}
+
+.active > .page-link,
+.page-link.active {
+    border-color: #fc3b3b;
+    background-color: #fc3b3b;
+}
+.page-link.active:hover {
+    color: white;
+}
+
+.page-link, .page-link:hover{
+    color: #fc3b3b;
+}
+
+.paginate_button.page-item.active > a.page-link:hover{
+    color: white;
+}
+
+.page-item.next:focus, .page-item.previous:focus{
+    color: #fc3b3b;
 }
