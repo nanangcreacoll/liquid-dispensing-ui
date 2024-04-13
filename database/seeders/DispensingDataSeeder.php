@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\DispensingData;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class DispensingDataSeeder extends Seeder
 {
@@ -12,6 +14,12 @@ class DispensingDataSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        for ($i = 0; $i < 10; $i++) {
+            DispensingData::create([
+                'volume' => rand(1, 50),
+                'capsule_qty' => rand(1,5),
+                'user_id' => rand(1, 3)
+            ]);
+        }
     }
 }
