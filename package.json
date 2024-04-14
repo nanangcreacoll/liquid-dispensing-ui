@@ -16,5 +16,8 @@
         "pusher-js": "^8.4.0-rc2",
         "vite": "^5.0",
         "ws": "^8.16.0"
+    },
+    "dependencies": {
+        "@popperjs/core": "^2.11.8"
     }
 }

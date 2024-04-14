@@ -1,4 +1,4 @@
-$(function () {
+$(function () {    
     function dispensingStartToast() {
         $("#dispensingStartToastCloseButton").hide();
         $("#dispensingStartToast").toast("show");
@@ -31,6 +31,8 @@ $(function () {
             }
         );
     }
+
+    $('#dataTable').DataTable();
 
     function dispensingErrorToast(errors) {
         const response = JSON.parse(errors);
