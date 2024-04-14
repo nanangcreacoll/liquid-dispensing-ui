@@ -14,7 +14,7 @@ class DispensingDataSeeder extends Seeder
      */
     public function run(): void
     {
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 30; $i++) {
             DispensingData::create([
                 'volume' => rand(1, 50),
                 'capsule_qty' => rand(1,5),
