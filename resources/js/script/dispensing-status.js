@@ -6,9 +6,15 @@ window.Echo.channel("dispensing-status").listen(
         if (event.status) {
             statusCircle.classList.remove("bg-danger");
             statusCircle.classList.add("bg-success");
+            document
+                        .getElementById("dispensingStartButton")
+                        .classList.remove("disabled");
         } else {
             statusCircle.classList.remove("bg-success");
             statusCircle.classList.add("bg-danger");
+            document
+                        .getElementById("dispensingStartButton")
+                        .classList.add("disabled");
         }
     }
 );

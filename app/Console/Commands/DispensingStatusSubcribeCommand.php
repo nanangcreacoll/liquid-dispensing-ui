@@ -34,7 +34,7 @@ class DispensingStatusSubcribeCommand extends Command
 
         $this->info("\nSubcribed to topic: {$topic}\n");
         $mqtt->subscribe($topic, function ($topic, $message) {
-            $this->info("Received message! \n{$message}\n");
+            $this->info("Received message from {$topic}! \n{$message}\n");
 
             $status = json_decode($message);
 
