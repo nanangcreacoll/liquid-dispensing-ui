@@ -41,6 +41,6 @@ class DispensingStatusSubcribeCommand extends Command
             event(new DispensingStatus($status->status));
         }, $qos);
 
-        $mqtt->loop(true, true);
+        $mqtt->loop(true);
     }
 }

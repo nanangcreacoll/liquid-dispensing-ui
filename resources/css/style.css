@@ -71,3 +71,7 @@
 .page-item.next:focus, .page-item.previous:focus{
     color: #fc3b3b;
 }
+
+table.dataTable {
+    text-align: center;
+}

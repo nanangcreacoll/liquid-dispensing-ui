@@ -11,4 +11,6 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 import './echo';
 
-import './dispensing_data';
+import '../dist/bootstrap/js/bootstrap.bundle';
+import './script/dispensing-status/';
+import './script/dispensing-data';

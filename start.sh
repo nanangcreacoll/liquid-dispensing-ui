@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# Start Laravel development server
+# start laravel server
 php artisan serve &
 
-# Start Reverb service
+# start laravelreverb broadcast
 php artisan reverb:start &
 
-# Subscribe to dispensing status
+# mqtt subscribe to dispensing/status
 php artisan app:dispensing-status-subscribe
