@@ -29,7 +29,7 @@ class DispensingStatusSubcribeCommand extends Command
     public function handle()
     {
         $topic = 'dispensing/status';
-        $qos = MqttClient::QOS_EXACTLY_ONCE;
+        $qos = MqttClient::QOS_AT_MOST_ONCE;
         $mqtt = MQTT::connection();
 
         $this->info("\nSubcribed to topic: {$topic}\n");
