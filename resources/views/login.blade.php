@@ -67,5 +67,8 @@
         </div>
     </div>
 </body>
+<script src="{{ asset('dist/jquery-3.7.1/jquery-3.7.1.min.js') }}"></script>
+<script src="{{ asset('dist/datatables/jquery.dataTables.js') }}"></script>
+<script src="{{ asset('dist/datatables/dataTables.bootstrap4.js') }}"></script>
 @vite('resources/js/app.js')
 </html>
