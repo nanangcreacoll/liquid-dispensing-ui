@@ -34,7 +34,7 @@ class DispensingDataController extends Controller
 
         $qos = MqttClient::QOS_AT_MOST_ONCE;
         $mqtt = MQTT::connection();
-        $topic = 'dispensing/data';
+        $topic = env('PUBLISH_TOPIC');
         $mqtt->publish($topic, json_encode($data), $qos);
         $mqtt->loop(true, true);
 

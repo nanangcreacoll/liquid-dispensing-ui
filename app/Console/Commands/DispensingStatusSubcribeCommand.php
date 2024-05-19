@@ -28,9 +28,16 @@ class DispensingStatusSubcribeCommand extends Command
      */
     public function handle()
     {
-        $topic = 'dispensing/status';
+        $topic = env('SUBSCRIBE_TOPIC');
         $qos = MqttClient::QOS_AT_MOST_ONCE;
         $mqtt = MQTT::connection();
+
+        pcntl_async_signals(true);
+        pcntl_signal(SIGINT, function () use ($mqtt) {
+            $this->info("\nTerminating MQTT subscriber.\n");
+            $mqtt->interrupt(); 
+            exit(0);
+        });
 
         $this->info("\nSubcribed to topic: {$topic}\n");
         $mqtt->subscribe($topic, function ($topic, $message) {
@@ -41,6 +48,11 @@ class DispensingStatusSubcribeCommand extends Command
             event(new DispensingStatus($status->status));
         }, $qos);
 
-        $mqtt->loop(true);
+        try {
+            $mqtt->loop(true);
+        } catch (\Exception $e) {
+            $this->error("An error occurred: " . $e->getMessage());
+            return 1;
+        }
     }
 }
