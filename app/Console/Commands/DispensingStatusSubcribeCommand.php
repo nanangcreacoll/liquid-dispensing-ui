@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use PhpMqtt\Client\MqttClient;
 use Illuminate\Console\Command;
 use App\Events\DispensingStatus;
+use Illuminate\Support\Facades\Cache;
 use PhpMqtt\Client\Facades\MQTT;
 
 class DispensingStatusSubcribeCommand extends Command
@@ -44,6 +45,8 @@ class DispensingStatusSubcribeCommand extends Command
             $this->info("Received message from {$topic}! \n{$message}\n");
 
             $status = json_decode($message);
+
+            Cache::put('dispensing-status', $status->status ? "true" : "false", 60*60*8);
 
             event(new DispensingStatus($status->status));
         }, $qos);
