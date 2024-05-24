@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-# start mysql
-net start mysql80 &
+# start mysql service
+sudo systemctl start mysql &
 
-# start emqx mqtt broker
-emqx start
+# start emqx service
+sudo systemctl start emqx

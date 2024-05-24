@@ -10,7 +10,7 @@
     <title>Login &bull; Liquid Dispensing I-131</title>
 </head>
 
-<body class="bg-danger bg-gradient">
+<body class="red-gradient">
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-19 col-md-5 col-lg-6 col-xl-4">

@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use PhpMqtt\Client\MqttClient;
 use Illuminate\Console\Command;
 use App\Events\DispensingStatus;
+use Illuminate\Support\Facades\Cache;
 use PhpMqtt\Client\Facades\MQTT;
 
 class DispensingStatusSubcribeCommand extends Command
@@ -28,9 +29,16 @@ class DispensingStatusSubcribeCommand extends Command
      */
     public function handle()
     {
-        $topic = 'dispensing/status';
+        $topic = env('SUBSCRIBE_TOPIC');
         $qos = MqttClient::QOS_AT_MOST_ONCE;
         $mqtt = MQTT::connection();
+
+        pcntl_async_signals(true);
+        pcntl_signal(SIGINT, function () use ($mqtt) {
+            $this->info("\nTerminating MQTT subscriber.\n");
+            $mqtt->interrupt(); 
+            exit(0);
+        });
 
         $this->info("\nSubcribed to topic: {$topic}\n");
         $mqtt->subscribe($topic, function ($topic, $message) {
@@ -38,9 +46,16 @@ class DispensingStatusSubcribeCommand extends Command
 
             $status = json_decode($message);
 
+            Cache::put('dispensing-status', $status->status ? "true" : "false", 60*60*8);
+
             event(new DispensingStatus($status->status));
         }, $qos);
 
-        $mqtt->loop(true);
+        try {
+            $mqtt->loop(true);
+        } catch (\Exception $e) {
+            $this->error("An error occurred: " . $e->getMessage());
+            return 1;
+        }
     }
 }

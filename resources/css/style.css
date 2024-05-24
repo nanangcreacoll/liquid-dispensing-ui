@@ -31,19 +31,19 @@
 }
 
 .btn-hover:hover {
-    background-image: linear-gradient(to bottom right, #ff6161, #e44343); /* Change background color on hover */
+    background: linear-gradient(90deg, #fc5e5e, #eb2e2e);
 }
 
 .text-bright {
-    color: #d2d2d2; /* Use white color for bright text */
+    color: #d2d2d2;
 }
 
 .status-circle {
     position: absolute;
-    top: 20px; /* Adjust as needed for positioning */
-    right: 20px; /* Adjust as needed for positioning */
-    width: 20px; /* Adjust as needed for size */
-    height: 20px; /* Adjust as needed for size */
+    top: 20px;
+    right: 20px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
 }
 
@@ -74,4 +74,8 @@
 
 table.dataTable {
     text-align: center;
+}
+
+body.red-gradient {
+    background: linear-gradient(90deg, #fc5e5e, #eb2e2e);
 }

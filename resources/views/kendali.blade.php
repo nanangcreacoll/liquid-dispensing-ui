@@ -4,6 +4,7 @@
     <h2 class="h2 text-secondary-emphasis mt-3 fst-italic">
         Kendali Liquid Dispensing Kapsul Radiofarmaka I-131
     </h2>
+    <meta name = "dispensing-status-session" content="{{ $dispensingStatusSession }}">
     <div class="row">
         <div class="col-xl-12 col-lg-12">
             <div class="card shadow mb-4 mt-4">

@@ -1,9 +1,6 @@
 #!/bin/sh
 
-# start in local
-
-# build vite
-npm run build;
+#start in development
 
 # start laravel reverb broadcast
 php artisan reverb:start &
@@ -12,4 +9,7 @@ php artisan reverb:start &
 php artisan app:dispensing-status-subscribe &
 
 # start laravel server
-php artisan serve --host 0.0.0.0 --port 8000
+php artisan serve --host 0.0.0.0 --port 8000 &
+
+# start vite server
+npm run dev

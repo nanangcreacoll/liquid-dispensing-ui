@@ -7,25 +7,21 @@ use PhpMqtt\Client\MqttClient;
 use PhpMqtt\Client\Facades\MQTT;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Artisan;
 use App\Http\Requests\DispensingDataRequest;
+use Illuminate\Support\Facades\Cache;
 
 class DispensingDataController extends Controller
 {
     public function kendaliView()
     {
-        return view("kendali");
+        $dispensingStatusSession = Cache::get('dispensing-status', true);
+        return view("kendali", ['dispensingStatusSession' => $dispensingStatusSession]);
     }
 
     public function riwayatView()
     {
         $tableData = DispensingData::all();
-        return view(
-            "riwayat",
-            [
-                'data' => $tableData
-            ]
-        );
+        return view("riwayat", ['data' => $tableData]);
     }
 
     public function store(DispensingDataRequest $request): JsonResponse
@@ -34,7 +30,7 @@ class DispensingDataController extends Controller
 
         $qos = MqttClient::QOS_AT_MOST_ONCE;
         $mqtt = MQTT::connection();
-        $topic = 'dispensing/data';
+        $topic = env('PUBLISH_TOPIC');
         $mqtt->publish($topic, json_encode($data), $qos);
         $mqtt->loop(true, true);
 
