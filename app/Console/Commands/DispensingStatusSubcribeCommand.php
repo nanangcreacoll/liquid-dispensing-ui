@@ -42,7 +42,9 @@ class DispensingStatusSubcribeCommand extends Command
 
         $this->info("\nSubcribed to topic: {$topic}\n");
         $mqtt->subscribe($topic, function ($topic, $message) {
-            $this->info("Received message from {$topic}! \n{$message}\n");
+            $timestamp = date('Y-m-d H:i:s') . '.' . substr((string)microtime(true), -3);
+
+            $this->info("{$timestamp} Received message from {$topic}! \n\t{$message}");
 
             $status = json_decode($message);
 
