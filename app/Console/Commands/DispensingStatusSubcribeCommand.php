@@ -36,13 +36,20 @@ class DispensingStatusSubcribeCommand extends Command
         pcntl_async_signals(true);
         pcntl_signal(SIGINT, function () use ($mqtt) {
             $this->info("\nTerminating MQTT subscriber.\n");
-            $mqtt->interrupt(); 
+            $mqtt->interrupt();
             exit(0);
         });
 
         $this->info("\nSubcribed to topic: {$topic}\n");
         $mqtt->subscribe($topic, function ($topic, $message) {
             $timestamp = date('Y-m-d H:i:s') . '.' . substr((string)microtime(true), -3);
+
+            $csvData = $timestamp . ';' . $message . "\n";
+            $filePath = storage_path('app/mqtt_subscribe.csv');
+            if (!file_exists($filePath)) {
+                touch($filePath);
+            }
+            file_put_contents($filePath, $csvData, FILE_APPEND);
 
             $this->info("{$timestamp} Received message from {$topic}! \n\t{$message}");
 
