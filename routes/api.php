@@ -9,3 +9,4 @@ use App\Http\Controllers\UserController;
 // })->middleware('auth:sanctum');
 
 Route::post('/register', [UserController::class, 'register'])->name('register');
+Route::get('/register-key', [UserController::class,'registerKey'])->name('register-key');

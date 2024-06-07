@@ -10,7 +10,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\UserLoginRequest;
 use App\Http\Requests\UserRegisterRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
+use App\Models\RegisterKey;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\JsonResponse;
 
 class UserController extends Controller
 {
@@ -30,7 +32,7 @@ class UserController extends Controller
     }
 
     public function loginAuth(UserLoginRequest $request): RedirectResponse
-    {        
+    {
         $credentials = $request->validated();
 
         if (Auth::attempt($credentials, $request->filled('remember-me'))) {
@@ -53,5 +55,21 @@ class UserController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('login');
+    }
+
+    public function registerKey(UserLoginRequest $request): JsonResponse
+    {
+        $credentials = $request->validated();
+
+        if (Auth::attempt($credentials))
+        {
+            return response()->json([
+                'register_key' => RegisterKey::first()->key
+                ]);
+        }
+
+        return response()->json([
+            'errors' => 'Username atau password salah.'
+        ], 401);
     }
 }

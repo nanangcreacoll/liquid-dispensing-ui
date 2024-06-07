@@ -38,4 +38,11 @@ class UserLoginRequest extends FormRequest
             'password.max' => 'Password terlalu panjang.'
         ];
     }
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response([
+            "errors" => $validator->getMessageBag()
+        ], 422));
+    }
 }

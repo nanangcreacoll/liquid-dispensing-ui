@@ -19,15 +19,5 @@ class UserSeeder extends Seeder
             'username' => 'operator',
             'password' => Hash::make('password'),
         ]);
-
-        User::create([
-            'username' => 'operator1',
-            'password' => Hash::make('password'),
-        ]);
-
-        User::create([
-            'username' => 'operator2',
-            'password' => Hash::make('password'),
-        ]);
     }
 }
