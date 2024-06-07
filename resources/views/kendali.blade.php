@@ -23,7 +23,7 @@
                             </div>
                         </div>
                     </div>
-                    <form id="dispensingDataForm" action="{{ route('dispensing-data-store') }}" method="post">
+                    <form id="dispensingDataForm" action="{{ route('dispensing-data-publish') }}" method="post">
                         @csrf
                         <div class="row justify-content-center">
                             <div class="form-group col-md-4 col-lg-4 mb-2">
@@ -76,6 +76,19 @@
             <div class="toast-body">
                 <div class="h5 text-center">
                     Dispensing telah selesai.
+                </div>
+            </div>
+            <button type="button" id="dispensingFinishToastCloseButton" class="btn-close btn-close-dark me-2 mt-2"
+                data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+    <div id="dispensingSuccessToast"
+        class="toast align-items-center text-bg-light border-0 position-fixed top-50 start-50 translate-middle"
+        role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
+        <div class="d-flex justify-content-center">
+            <div class="toast-body">
+                <div class="h5 text-center">
+                    Data dispensing telah tersimpan.
                 </div>
             </div>
             <button type="button" id="dispensingFinishToastCloseButton" class="btn-close btn-close-dark me-2 mt-2"

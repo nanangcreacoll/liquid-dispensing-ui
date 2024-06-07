@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use App\Models\RegisterKey;
 
 class UserRegisterRequest extends FormRequest
 {
@@ -39,6 +40,17 @@ class UserRegisterRequest extends FormRequest
             'password.min' => 'Password minimal 6 karakter.',
             'password.max' => 'Password terlalu panjang.'
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $registerKey = $this->header('register_key');
+
+        if (!$registerKey || $registerKey !== RegisterKey::first()->key) {
+            throw new HttpResponseException(response()->json([
+                'errors' => ['register_key' => 'Register key tidak ada atau tidak valid.']
+            ], 403));
+        }
     }
 
     protected function failedValidation(Validator $validator)

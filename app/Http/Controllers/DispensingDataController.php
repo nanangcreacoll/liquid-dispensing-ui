@@ -28,17 +28,33 @@ class DispensingDataController extends Controller
     {
         $data = $request->validated();
 
-        $qos = MqttClient::QOS_AT_MOST_ONCE;
-        $mqtt = MQTT::connection();
-        $topic = env('PUBLISH_TOPIC');
-        $mqtt->publish($topic, json_encode($data), $qos);
-        $mqtt->loop(true, true);
-
         $dispensingData = new DispensingData();
         $dispensingData->volume = $data['volume'];
         $dispensingData->capsule_qty = $data['capsuleQty'];
         $dispensingData->user_id = Auth::id();
         $dispensingData->save();
+
+        return response()->json(['success' => true]);
+    }
+
+    public function publish(DispensingDataRequest $request): JsonResponse
+    {
+        $data = $request->validated();
+
+        $qos = MqttClient::QOS_AT_MOST_ONCE;
+        $mqtt = MQTT::connection();
+        $topic = env('PUBLISH_TOPIC');
+        $mqtt->publish($topic, json_encode($data), $qos);
+
+        $timestamp = date('Y-m-d H:i:s') . '.' . substr((string)microtime(true), -3);
+        $csvData = $timestamp . ';' . json_encode($data) . "\n";
+        $filePath = storage_path('app/mqtt_publish.csv');
+        if (!file_exists($filePath)) {
+            touch($filePath);
+        }
+        file_put_contents($filePath, $csvData, FILE_APPEND);
+
+        $mqtt->loop(true, true);
 
         return response()->json(['success' => true]);
     }
