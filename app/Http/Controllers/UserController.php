@@ -34,7 +34,6 @@ class UserController extends Controller
     public function loginAuth(UserLoginRequest $request): RedirectResponse
     {
         $credentials = $request->validated();
-
         if (Auth::attempt($credentials, $request->filled('remember-me'))) {
             $request->session()->regenerate();
 
@@ -49,9 +48,7 @@ class UserController extends Controller
     public function logoutAuth(Request $request): RedirectResponse
     {
         Auth::logout();
-
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
 
         return redirect('login');
@@ -60,7 +57,6 @@ class UserController extends Controller
     public function registerKey(UserLoginRequest $request): JsonResponse
     {
         $credentials = $request->validated();
-
         if (Auth::attempt($credentials))
         {
             return response()->json([
