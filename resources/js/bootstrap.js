@@ -14,3 +14,4 @@ import './echo';
 import '../dist/bootstrap/js/bootstrap.bundle';
 import './script/dispensing-status/';
 import './script/dispensing-data';
+import './script/password-toggle'

@@ -47,6 +47,10 @@
                                     <input type="password" name="password" class="form-control" id="password"
                                         placeholder="Password" required>
                                     <label for="password">Password</label>
+                                    <span class="position-absolute top-50 end-0 translate-middle-y me-3" id="togglePassword" style="cursor: pointer;">
+                                        <img src="{{ asset('icon/eye.svg') }}" id="eyeIcon" width="16" height="16" alt="Show Password">
+                                        <img src="{{ asset('icon/eye-slash.svg') }}" id="eyeSlashIcon" width="16" height="16" alt="Hide Password" style="display: none;">
+                                    </span>
                                 </div>
                                 <div class="form-check text-start my-3">
                                     <input class="form-check-input" type="checkbox" name="remember-me"

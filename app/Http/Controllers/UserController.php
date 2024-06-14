@@ -60,7 +60,7 @@ class UserController extends Controller
         if (Auth::attempt($credentials))
         {
             return response()->json([
-                'register_key' => RegisterKey::first()->key
+                'register-key' => RegisterKey::first()->key
                 ]);
         }
 
