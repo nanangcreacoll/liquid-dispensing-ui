@@ -44,11 +44,11 @@ class UserRegisterRequest extends FormRequest
 
     protected function prepareForValidation()
     {
-        $registerKey = $this->header('register_key');
+        $registerKey = $this->header('register-key');
 
         if (!$registerKey || $registerKey !== RegisterKey::first()->key) {
             throw new HttpResponseException(response()->json([
-                'errors' => ['register_key' => 'Register key tidak ada atau tidak valid.']
+                'errors' => ['register-key' => 'Register key tidak ada atau tidak valid.']
             ], 403));
         }
     }
