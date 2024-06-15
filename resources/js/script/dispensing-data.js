@@ -1,4 +1,7 @@
 $(function () {
+
+    let submit = false;
+
     function dispensingStartToast() {
         $("#dispensingStartToastCloseButton").hide();
         $("#dispensingStartToast").toast("show");
@@ -8,7 +11,7 @@ $(function () {
         window.Echo.channel("dispensing-status").listen(
             "DispensingStatus",
             (event) => {
-                if (!event.status && !processToast) {
+                if (!event.status && !processToast && submit) {
                     $("#dispensingStartToastCloseButton").show();
                     document
                         .getElementById("dispensingStartButton")
@@ -17,7 +20,8 @@ $(function () {
                         $("#dispensingStartToast").toast("hide");
                     }, 3000);
                     processToast = true;
-                } else if (event.status && processToast){
+                    submit = false;
+                } else if (event.status && processToast && !submit) {
                     $("#dispensingStartToast").toast("hide");
                     $("#dispensingFinishToast").toast("show");
                     setTimeout(function () {
@@ -53,6 +57,11 @@ $(function () {
         $("#dispensingErrorToast").toast("show");
     }
 
+    function clearVolumeAndCapsuleQty() {
+        $("#volume").val("");
+        $("#capsule-qty").val("");
+    }
+
     function dispensingStoreData() {
         let volume = parseInt($("#volume").val(),10);
         let capsuleQty = parseInt($("#capsule-qty").val(),10);
@@ -76,23 +85,28 @@ $(function () {
                     setTimeout(function () {
                         $("#dispensingSuccessToast").toast("hide");
                     }, 3000);
+                    clearVolumeAndCapsuleQty();
                 } else {
                     console.error(
                         "Error menyimpan data dispensing:",
                         response.error
                     );
                     dispensingErrorToast(response.error);
+                    clearVolumeAndCapsuleQty();
                 }
             },
             error: function (xhr, status, error) {
                 console.error("Error menyimpan data: ", error);
                 console.error(xhr.responseText);
                 dispensingErrorToast(xhr.responseText);
+                clearVolumeAndCapsuleQty();
             },
         });
     }
 
     $("#dispensingDataForm").on("submit", function (e) {
+        submit = true;
+
         e.preventDefault();
 
         let volume = parseInt($("#volume").val(),10);
