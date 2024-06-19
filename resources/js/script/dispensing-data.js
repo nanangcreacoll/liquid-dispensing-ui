@@ -1,146 +1,119 @@
 $(function () {
 
     let submit = false;
+    let processToast = false;
 
-    function dispensingStartToast() {
-        $("#dispensingStartToastCloseButton").hide();
-        $("#dispensingStartToast").toast("show");
+    const ajaxSetup = () => {
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+        });
+    };
 
-        let processToast = false;
+    const showToast = (toastId) => {
+        $(toastId).toast("show");
+    };
 
-        window.Echo.channel("dispensing-status").listen(
-            "DispensingStatus",
-            (event) => {
-                if (!event.status && !processToast && submit) {
-                    $("#dispensingStartToastCloseButton").show();
-                    document
-                        .getElementById("dispensingStartButton")
-                        .classList.add("disabled");
-                    setTimeout(function () {
-                        $("#dispensingStartToast").toast("hide");
-                    }, 3000);
-                    processToast = true;
-                    submit = false;
-                } else if (event.status && processToast && !submit) {
-                    $("#dispensingStartToast").toast("hide");
-                    $("#dispensingFinishToast").toast("show");
-                    setTimeout(function () {
-                        $("#dispensingFinishToast").toast("hide");
-                        dispensingStoreData();
-                    }, 3000);
-                    document
-                        .getElementById("dispensingStartButton")
-                        .classList.remove("disabled");
-                    processToast = false;
-                }
-            }
-        );
-    }
+    const hideToast = (toastId) => {
+        $(toastId).toast("hide");
+    };
 
-    $('#dataTable').DataTable();
-
-    function dispensingErrorToast(errors) {
-        const response = JSON.parse(errors);
-
-        let errorMessage = "";
-        if (response.errors) {
-            Object.keys(response.errors).forEach((field) => {
-                errorMessage += response.errors[field] + "<br>";
-            });
-        } else {
-            errorMessage = "Error tidak diketahui.";
+    const handleDispensingStatus = (event) => {
+        if (!event.status && submit) {
+            $("#dispensingStartToastCloseButton").show();
+            setTimeout(() => hideToast("#dispensingStartToast"), 3000);
+            processToast = true;
+            submit = false;
+        } else if (event.status && processToast) {
+            showToast("#dispensingFinishToast");
+            setTimeout(() => {
+                hideToast("#dispensingFinishToast");
+                dispensingStoreData();
+            }, 3000);
+            processToast = false;
         }
+    };
 
-        document.getElementById("dispensingErrorMessage").innerHTML =
-            errorMessage;
+    const setupDispensingStatusListener = () => {
+        window.Echo.channel("dispensing-status").listen("DispensingStatus", handleDispensingStatus);
+    };
 
-        $("#dispensingErrorToast").toast("show");
-    }
+    const displayErrors = (errors) => {
+        const response = JSON.parse(errors);
+        let errorMessage = response.errors ? Object.values(response.errors).join("<br>") : "Error tidak diketahui.";
+        $("#dispensingErrorMessage").html(errorMessage);
+        showToast("#dispensingErrorToast");
+    };
 
-    function clearVolumeAndCapsuleQty() {
+    const clearInputs = () => {
         $("#volume").val("");
         $("#capsule-qty").val("");
-    }
+    };
 
-    function dispensingStoreData() {
-        let volume = parseInt($("#volume").val(),10);
-        let capsuleQty = parseInt($("#capsule-qty").val(),10);
+    const dispensingStoreData = () => {
+        let volume = parseInt($("#volume").val(), 10);
+        let capsuleQty = parseInt($("#capsule-qty").val(), 10);
 
-        $.ajaxSetup({
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
-        });
+        ajaxSetup();
 
         $.ajax({
-            url: "/store",
+            url: $('meta[name="store-data-route"]').attr('content'),
             type: "POST",
-            data: {
-                volume: volume,
-                capsuleQty: capsuleQty,
-            },
-            success: function (response) {
+            data: { volume, capsuleQty },
+            success: (response) => {
                 if (response.success) {
-                    $("#dispensingSuccessToast").toast("show");
-                    setTimeout(function () {
-                        $("#dispensingSuccessToast").toast("hide");
-                    }, 3000);
-                    clearVolumeAndCapsuleQty();
+                    showToast("#dispensingSuccessToast");
+                    setTimeout(() => hideToast("#dispensingSuccessToast"), 3000);
                 } else {
-                    console.error(
-                        "Error menyimpan data dispensing:",
-                        response.error
-                    );
-                    dispensingErrorToast(response.error);
-                    clearVolumeAndCapsuleQty();
+                    console.error("Error menyimpan data dispensing:", response.error);
+                    displayErrors(response.error);
                 }
+                clearInputs();
             },
-            error: function (xhr, status, error) {
-                console.error("Error menyimpan data: ", error);
-                console.error(xhr.responseText);
-                dispensingErrorToast(xhr.responseText);
-                clearVolumeAndCapsuleQty();
+            error: (xhr) => {
+                console.error("Error menyimpan data:", xhr.responseText);
+                displayErrors(xhr.responseText);
+                clearInputs();
             },
         });
-    }
+    };
 
-    $("#dispensingDataForm").on("submit", function (e) {
+    const handleSubmit = (e) => {
+        e.preventDefault();
         submit = true;
 
-        e.preventDefault();
+        let volume = parseInt($("#volume").val(), 10);
+        let capsuleQty = parseInt($("#capsule-qty").val(), 10);
 
-        let volume = parseInt($("#volume").val(),10);
-        let capsuleQty = parseInt($("#capsule-qty").val(),10);
-
-        $.ajaxSetup({
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
-        });
+        ajaxSetup();
 
         $.ajax({
             url: $('form[id="dispensingDataForm"]').attr("action"),
             type: "POST",
-            data: {
-                volume: volume,
-                capsuleQty: capsuleQty,
-            },
-            success: function (response) {
+            data: { volume, capsuleQty },
+            success: (response) => {
                 if (response.success) {
                     dispensingStartToast();
                 } else {
-                    console.error(
-                        "Error mengirim data dispensing:",
-                        response.error
-                    );
-                    dispensingErrorToast(response.error);
+                    console.error("Error mengirim data dispensing:", response.error);
+                    displayErrors(response.error);
                 }
             },
-            error: function (xhr, status, error) {
-                console.error("Error mengirim data:", error);
-                console.error(xhr.responseText);
-                dispensingErrorToast(xhr.responseText);
+            error: (xhr) => {
+                console.error("Error mengirim data:", xhr.responseText);
+                displayErrors(xhr.responseText);
             },
         });
-    });
+    };
+
+    const dispensingStartToast = () => {
+        $("#dispensingStartToastCloseButton").hide();
+        showToast("#dispensingStartToast");
+        setupDispensingStatusListener();
+    };
+
+    $("#dispensingDataForm").on("submit", handleSubmit);
+    $('#dataTable').DataTable();
+
 });

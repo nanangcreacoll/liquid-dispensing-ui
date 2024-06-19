@@ -46,13 +46,13 @@ class DispensingDataController extends Controller
         $topic = env('PUBLISH_TOPIC');
         $mqtt->publish($topic, json_encode($data), $qos);
 
-        $timestamp = date('Y-m-d H:i:s') . '.' . substr((string)microtime(true), -3);
-        $csvData = $timestamp . ';' . json_encode($data) . "\n";
-        $filePath = storage_path('app/mqtt_publish.csv');
-        if (!file_exists($filePath)) {
-            touch($filePath);
-        }
-        file_put_contents($filePath, $csvData, FILE_APPEND);
+        // $timestamp = date('Y-m-d H:i:s') . '.' . substr((string)microtime(true), -3);
+        // $csvData = $timestamp . ';' . json_encode($data) . "\n";
+        // $filePath = storage_path('app/mqtt_publish.csv');
+        // if (!file_exists($filePath)) {
+        //     touch($filePath);
+        // }
+        // file_put_contents($filePath, $csvData, FILE_APPEND);
 
         $mqtt->loop(true, true);
 
