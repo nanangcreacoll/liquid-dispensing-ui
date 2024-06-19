@@ -47,7 +47,7 @@ register-key: "key"
 ```json
     {
         "data": {
-            "id": id,
+            "id": 1,
             "username": "username"
         }
     }
