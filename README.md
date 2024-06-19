@@ -4,9 +4,36 @@ User Interface ini dibuat sebagai tampilan kendali untuk mengendalikan proses di
 
 ## Registrasi User
 
-Registrasi user menggunakan API.
+Registrasi user menggunakan API. Gunakan `register-key` pada request header ketika registrasi user. Dapatkan register key menggunakan user yang sudah terdaftar.
+
+# Get Register Key
+
+- Request URL (`GET`): `/api/register-key`
+
+- Request body:
+```json
+    {
+        "username": "username",
+        "password": "password"
+    }
+```
+
+- Response: 
+```json
+    {
+        "register-key": "key"
+    }
+```
+
+
+# Register User
 
 - Request URL (`POST`): `/api/register`
+
+- Request Header:
+```header
+register-key: "key"
+```
     
 - Request body: 
 ```json
@@ -16,9 +43,22 @@ Registrasi user menggunakan API.
     }
 ```
 
+- Response:
+```json
+    {
+        "data": {
+            "id": id,
+            "username": "username"
+        }
+    }
+```
+
 ## Tampilan
 
 User interface ini akan mengirimkan parameter dispensing dengan volume maksimal 50 dan jumlah kapsul maksimal 5.
+
+**Login**
+![img.jpeg](login_view.jpeg)
 
 **Kendali**
 ![img.jpeg](kendali_view.jpeg)

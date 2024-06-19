@@ -44,12 +44,12 @@ class DispensingStatusSubcribeCommand extends Command
         $mqtt->subscribe($topic, function ($topic, $message) {
             $timestamp = date('Y-m-d H:i:s') . '.' . substr((string)microtime(true), -3);
 
-            $csvData = $timestamp . ';' . $message . "\n";
-            $filePath = storage_path('app/mqtt_subscribe.csv');
-            if (!file_exists($filePath)) {
-                touch($filePath);
-            }
-            file_put_contents($filePath, $csvData, FILE_APPEND);
+            // $csvData = $timestamp . ';' . $message . "\n";
+            // $filePath = storage_path('app/mqtt_subscribe.csv');
+            // if (!file_exists($filePath)) {
+            //     touch($filePath);
+            // }
+            // file_put_contents($filePath, $csvData, FILE_APPEND);
 
             $this->info("{$timestamp} Received message from {$topic}! \n\t{$message}");
 
