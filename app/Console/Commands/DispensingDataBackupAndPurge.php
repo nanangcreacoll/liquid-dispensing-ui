@@ -48,7 +48,7 @@ class DispensingDataBackupAndPurge extends Command
 
             Log::info('CSV Content: ' . $csv->toString());
 
-            Storage::disk('local')->put($csvFileName, $csv->toString());
+            Storage::put($csvFileName, $csv->toString());
 
             if (Storage::disk('local')->exists($csvFileName)) {
                 $this->info('Data backed up to ' . $csvFileName);
