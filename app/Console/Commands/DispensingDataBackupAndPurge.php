@@ -46,9 +46,9 @@ class DispensingDataBackupAndPurge extends Command
                 $csv->insertOne((array)$row);
             }
 
-            Log::info('CSV Content: ' . $csv->toString());
+            $this->info('CSV Content: ' . PHP_EOL . $csv->toString());
 
-            Storage::put($csvFileName, $csv->toString());
+            Storage::disk('local')->put($csvFileName, $csv->toString());
 
             if (Storage::disk('local')->exists($csvFileName)) {
                 $this->info('Data backed up to ' . $csvFileName);
