@@ -30,7 +30,7 @@ class DispensingDataBackupAndPurge extends Command
     public function handle()
     {
         $recordCount = DB::table('dispensing_data')->count();
-        $maxRecordCount = 10;
+        $maxRecordCount = 10000;
 
         if ($recordCount > $maxRecordCount) {
             $this->info('Data exceeds '. $maxRecordCount .' records. Backing up and purging data.');
