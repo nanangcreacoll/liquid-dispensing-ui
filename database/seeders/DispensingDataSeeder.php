@@ -18,7 +18,7 @@ class DispensingDataSeeder extends Seeder
             DispensingData::create([
                 'volume' => rand(1, 50),
                 'capsule_qty' => rand(1,5),
-                'user_id' => rand(1, 3)
+                'user_id' => 1
             ]);
         }
     }

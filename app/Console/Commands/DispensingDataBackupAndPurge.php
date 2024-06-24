@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 use League\Csv\Writer;
 
 class DispensingDataBackupAndPurge extends Command
@@ -32,7 +33,7 @@ class DispensingDataBackupAndPurge extends Command
         $maxRecordCount = 10000;
 
         if ($recordCount > $maxRecordCount) {
-            $this->info('Data exceeds 100,000 records. Backing up and purging data.');
+            $this->info('Data exceeds '. $maxRecordCount .' records. Backing up and purging data.');
 
             $data = DB::table('dispensing_data')->get();
 
@@ -45,13 +46,22 @@ class DispensingDataBackupAndPurge extends Command
                 $csv->insertOne((array)$row);
             }
 
+            Log::info('CSV Content: ' . $csv->toString());
+
             Storage::disk('local')->put($csvFileName, $csv->toString());
+
+            if (Storage::disk('local')->exists($csvFileName)) {
+                $this->info('Data backed up to ' . $csvFileName);
+            } else {
+                $this->error('Failed to back up data.');
+                return;
+            }
 
             DB::table('dispensing_data')->truncate();
 
             $this->info('Data backed up to ' . $csvFileName . ' and purged from database.');
         } else {
-            $this->info('Data does not exceed 100,000 records. No action taken.');
+            $this->info('Data does not exceed '. $maxRecordCount .' records. No action taken.');
         }
 
     }
