@@ -14,7 +14,7 @@ class DispensingDataController extends Controller
 {
     public function kendaliView()
     {
-        $dispensingStatusSession = Cache::get('dispensing-status', true);
+        $dispensingStatusSession = Cache::get('dispensing-status', "true");
         return view("kendali", ['dispensingStatusSession' => $dispensingStatusSession]);
     }
 
