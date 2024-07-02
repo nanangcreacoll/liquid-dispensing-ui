@@ -14,7 +14,7 @@
                         <th>No</th>
                         <th>Waktu</th>
                         <th>User</th>
-                        <th>Volume Kapsul</th>
+                        <th>Volume Kapsul (&mu;L)</th>
                         <th>Jumlah Kapsul</th>
                     </tr>
                 </thead>
