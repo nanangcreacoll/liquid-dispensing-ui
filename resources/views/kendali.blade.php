@@ -28,9 +28,12 @@
                         <div class="row justify-content-center">
                             <div class="form-group col-md-4 col-lg-4 mb-2">
                                 <div class="card shadow border-0 position-relative" style="border-radius: 12%;">
-                                    <input
-                                        class="mt-5 border-0 form-control text h1 text-large font-weight-bold text-body text-uppercase text-center"
-                                        type="number" id="volume" placeholder="00" min="1" max="50" step="1" required autocomplete="off">
+                                    <div class="d-flex mt-5">
+                                        <input
+                                            class="border-0 form-control text h1 text-large font-weight-bold text-body text-uppercase text-center"
+                                            type="number" id="volume" placeholder="00" min="1" max="50" step="1" required autocomplete="off">
+                                            <span class="h3 font-weight-bold text-body position-absolute end-0 bottom-0 mb-5 me-3"><strong>&mu;L</strong></span>
+                                    </div>
                                     <label class="text h3 font-weight-bold text-body text-center"
                                         for="inputVolume"><strong>Volume</strong></label>
                                 </div>
